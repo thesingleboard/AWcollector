@@ -1,21 +1,25 @@
 # connectorbot
-Connect all of your online services together
+An all in one network connector solution.
 
 Notes:
 
-Discord Connector
+Router
 
-Twitch Connector
+Whole home outgoing vpn
 
-Dlive Connector
+Speedtester
 
-Github Connector
+Dnsmasq
 
-Coinbase Connector
+openvpn
 
-Slack Connector
+pihole
 
-Twitter Connector
+NAS
 
-Steam Connector
+Cloudstorage
+
+Prometheus Node Exporter
+
+Custom prometheus scrape endpoints
 
