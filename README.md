@@ -19,7 +19,12 @@ NAS
 
 Cloudstorage
 
+https://hub.docker.com/_/owncloud
+
 Prometheus Node Exporter
+
+https://prometheus.io/docs/guides/node-exporter/
 
 Custom prometheus scrape endpoints
 
+Python prometheus
