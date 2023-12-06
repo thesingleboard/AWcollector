@@ -6,12 +6,13 @@ from connector_lib import Operations as op
 from connector_lib import Prometheus as prom
 
 pr = prom()
-o = op()
+#o = op()
 
 def main():
     pr.start_server()
 
     while  True:
+        o = op()
         current = o.get_metrics()
         current['name'] = o.get_name()
         current['location'] = o.get_location()

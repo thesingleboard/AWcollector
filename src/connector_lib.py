@@ -14,23 +14,23 @@ class Operations():
         self.device = self._get_devices()
 
     def get_coords(self):
-
+        #device = self._get_devices()
         return self.device['info']['coords']['coords']
     
     def get_location(self):
-
+        #device = self._get_devices()
         return self.device['info']['coords']['location']
     
     def get_name(self):
-
+        #device = self._get_devices()
         return self.device['info']['name']
     
     def get_mac(self):
-
+        #device = self._get_devices()
         return self.device['macAddress']
 
     def get_metrics(self):
-
+        #device = self._get_devices()
         return {'dewpoint':self.device['lastData']['dewPointin'],
             'tempin':self.device['lastData']['tempinf'],
             'feelslike':self.device['lastData']['feelsLikein'],
