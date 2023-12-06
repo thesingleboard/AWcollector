@@ -11,31 +11,44 @@ class Operations():
 
     def __init__(self) -> None:
         logging.info('Getting the weather station data.')
+        self.device = self._get_devices()
 
     def get_coords(self):
 
-        co = []
+        return self.device['info']['coords']['coords']
+    
+    def get_location(self):
 
-        for ws in self.get_devices():
-            co.append(ws['info']['coords'])
-        
-        return co
+        return self.device['info']['coords']['location']
     
     def get_name(self):
-        names = []
 
-        for ws in self.get_devices():
-            names.append(ws['info']['name'])
-        
-        return names
+        return self.device['info']['name']
+    
+    def get_mac(self):
 
-    def get_devices(self):
+        return self.device['macAddress']
+
+    def get_metrics(self):
+
+        return {'dewpoint':self.device['lastData']['dewPointin'],
+            'tempin':self.device['lastData']['tempinf'],
+            'feelslike':self.device['lastData']['feelsLikein'],
+            'humidity':self.device['lastData']['humidityin'],
+            'lightningday':self.device['lastData']['lightning_day'],
+            'weeklyrainin':self.device['lastData']['weeklyrainin'],
+            'dailyrainin':self.device['lastData']['dailyrainin'],
+            'yearlyrainin':self.device['lastData']['yearlyrainin'],
+            'monthlyrainin':self.device['lastData']['monthlyrainin'],
+            'windspeedmph':self.device['lastData']['windspeedmph']}
+    
+    def _get_devices(self):
 
         self.url = f"{settings.amb_endpoint}/devices/?apiKey={settings.api_key}&applicationKey={settings.app_key}"
 
         return self._getvalue()
 
-    def get_device(self,mac):
+    def _get_device(self,mac):
         
         self.url = f"{settings.amb_endpoint}/devices/{mac}?apiKey={settings.api_key}&applicationKey={settings.app_key}&limit=1&end_date={settings.current_time}"
 
@@ -62,7 +75,7 @@ class Prometheus():
         #start_http_server(9002)
 
     def start_server(self):
-        start_http_server(9002)
+        start_http_server(9028)
         self.dewpoint = Gauge('dewpoint','The current dew point.',['name','location','mac'])
         self.tempinf = Gauge('current_temp','The current temperature.',['name','location','mac'])
         self.feelslike = Gauge('feels_like','Feels like temp',['name','location','mac'])

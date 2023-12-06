@@ -18,6 +18,6 @@ ADD entrypoint.sh $INSTALL_PATH
 ADD settings.py $INSTALL_PATH
 
 #PROM port
-EXPOSE 9002
+#EXPOSE 9028
 
 ENTRYPOINT ["python3","run_app.py"]
