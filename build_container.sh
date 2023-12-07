@@ -1,1 +1,1 @@
-docker build -t connectorbot ./src
+docker build -t awcollector ./src
