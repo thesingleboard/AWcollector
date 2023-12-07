@@ -1,30 +1,30 @@
-# connectorbot
-An all in one network connector solution.
+# AWcollector
 
-Notes:
+A Prometheus collector for the Ambient Weather [API](https://ambientweather.docs.apiary.io/#introduction/authentication).
 
-Router
+**Tools used**
 
-Whole home outgoing vpn
+Python Prometheus v0.17.1
+Docker
 
-Speedtester
+**Build**
 
-Dnsmasq
+Build the container with the *build_container.sh* shell script.
 
-openvpn
+**Environment Variables**
 
-pihole
+You will need to set several environment variables in order for the container to operate properly.
 
-NAS
+```bash
+AMBIENT_ENDPOINT='https://api.ambientweather.net/v1'
+AMBIENT_API_KEY='xxxxxxx'
+AMBIENT_APPLICATION_KEY='xxxxxxx'
+```
 
-Cloudstorage
+**Run the container**
 
-https://hub.docker.com/_/owncloud
+The container 
 
-Prometheus Node Exporter
-
-https://prometheus.io/docs/guides/node-exporter/
-
-Custom prometheus scrape endpoints
-
-Python prometheus
+```bash
+docker run -d -p 9028:9028 --network container_net --name connectorbot -e AMBIENT_APPLICATION_KEY="xxxxx" -e AMBIENT_API_KEY="xxxxx" -e AMBIENT_ENDPOINT="https://api.ambientweather.net/v1" connectorbot:latest
+```
