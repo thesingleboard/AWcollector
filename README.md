@@ -2,6 +2,11 @@
 
 A Prometheus collector for the Ambient Weather [API](https://ambientweather.docs.apiary.io/#introduction/authentication).
 
+## Pre-reqs
+
+Prometheus
+
+
 ## Setup
 
 **Tools used**
