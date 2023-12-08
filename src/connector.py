@@ -6,7 +6,6 @@ from connector_lib import Operations as op
 from connector_lib import Prometheus as prom
 
 pr = prom()
-#o = op()
 
 def main():
     pr.start_server()
