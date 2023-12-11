@@ -46,7 +46,9 @@ class Operations():
                 'aw_yearlyrainin':self.device['lastData']['yearlyrainin'],
                 'aw_maxgust':self.device['lastData']['maxdailygust'],
                 'aw_solarradiation':self.device['lastData']['solarradiation'],
-                'aw_windspeedmph':self.device['lastData']['windspeedmph']
+                'aw_windspeedmph':self.device['lastData']['windspeedmph'],
+                'aw_barametric':self.device['lastData']['baromabsin'],
+                'aw_winddir':self.device['lastData']['winddir']
                 }
     
     def _get_devices(self):
@@ -97,6 +99,8 @@ class Prometheus():
         self.aw_windspeedmph = Gauge('aw_windspeedmph','The current windspeed in mph.',['name','location','mac'])
         self.aw_maxgust = Gauge('aw_maxgust','The maximum daily wind gust speed.',['name','location','mac'])
         self.aw_solarradiation = Gauge('aw_solarradiation','Solar radiation for the day.',['name','location','mac'])
+        self.aw_barametric = Gauge('aw_barametric','Absolute barametric pressure measured in bars.',['name','location','mac'])
+        self.aw_winddir = Gauge('aw_winddir','Wind direction in degrees.',['name','location','mac'])
 
     def current_readings(self,input_dict):
         """
@@ -126,6 +130,8 @@ class Prometheus():
             self.aw_windspeedmph.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_windspeedmph']) 
             self.aw_maxgust.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_maxgust'])
             self.aw_solarradiation.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_solarradiation'])
+            self.aw_barametric.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_barametric'])
+            self.aw_winddir.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_winddir'])
         except Exception as e:
             logging.error(e)
             logging.error("Could not emit the weather metrics.")
