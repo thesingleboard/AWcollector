@@ -46,7 +46,9 @@ class Operations():
                 'aw_yearlyrainin':self.device['lastData']['yearlyrainin'],
                 'aw_maxgust':self.device['lastData']['maxdailygust'],
                 'aw_solarradiation':self.device['lastData']['solarradiation'],
-                'aw_windspeedmph':self.device['lastData']['windspeedmph']
+                'aw_windspeedmph':self.device['lastData']['windspeedmph'],
+                'aw_barametric':self.device['lastData']['baromabsin'],
+                'aw_winddir':self.device['lastData']['winddir']
                 }
     
     def _get_devices(self):
@@ -63,7 +65,7 @@ class Operations():
 
     def _getvalue(self):
         
-        logging.info("Getting the url value.")
+        logging.info(f"Getting the url value: {self.url}")
         
         try:
             payload = {}
@@ -82,21 +84,23 @@ class Prometheus():
 
     def start_server(self):
         start_http_server(9028)
-        self.aw_dewpoint = Gauge('aw_dewpoint','The current dew point.',['name','location','mac'])
-        self.aw_tempin = Gauge('aw_tempin','The current temperature.',['name','location','mac'])
-        self.aw_feelslike = Gauge('aw_feelslike','Feels like temp',['name','location','mac'])
-        self.aw_humidity = Gauge('aw_humidity','The current humidity',['name','location','mac'])
-        self.aw_lightningday = Gauge('aw_lightningday','Number of lighting strikes per day.',['name','location','mac'])
-        self.aw_lightninghour = Gauge('aw_lightninghour','Number of lighting strikes per hour.',['name','location','mac'])
-        self.aw_lightningtime = Gauge('aw_lightningtime','Time of the last lightning strike in unix epoc.',['name','location','mac'])
-        self.aw_lightningdistance = Gauge('aw_lightningdistance','The distance of the last lightning strike in miles.',['name','location','mac'])
-        self.aw_weeklyrainin = Gauge('aw_weeklyrainin','The weekly amount of rain in inches.',['name','location','mac'])
-        self.aw_dailyrainin = Gauge('aw_dailyrainin','The daily amount of rain in inches.',['name','location','mac'])
-        self.aw_yearlyrainin = Gauge('aw_yearlyrainin','The yearly amount of rain in inches.',['name','location','mac'])
-        self.aw_monthlyrainin = Gauge('aw_monthlyrainin','The monthly amount of rain in inches.',['name','location','mac'])
-        self.aw_windspeedmph = Gauge('aw_windspeedmph','The current windspeed in mph.',['name','location','mac'])
-        self.aw_maxgust = Gauge('aw_maxgust','The maximum daily wind gust speed.',['name','location','mac'])
-        self.aw_solarradiation = Gauge('aw_solarradiation','Solar radiation for the day.',['name','location','mac'])
+        self.aw_dewpoint = Gauge('aw_dewpoint','The current dew point.',['aw_name','aw_location','aw_mac'])
+        self.aw_tempin = Gauge('aw_tempin','The current temperature.',['aw_name','aw_location','aw_mac'])
+        self.aw_feelslike = Gauge('aw_feelslike','Feels like temp',['aw_name','aw_location','aw_mac'])
+        self.aw_humidity = Gauge('aw_humidity','The current humidity',['aw_name','aw_location','aw_mac'])
+        self.aw_lightningday = Gauge('aw_lightningday','Number of lighting strikes per day.',['aw_name','aw_location','aw_mac'])
+        self.aw_lightninghour = Gauge('aw_lightninghour','Number of lighting strikes per hour.',['aw_name','aw_location','aw_mac'])
+        self.aw_lightningtime = Gauge('aw_lightningtime','Time of the last lightning strike in unix epoc.',['aw_name','aw_location','aw_mac'])
+        self.aw_lightningdistance = Gauge('aw_lightningdistance','The distance of the last lightning strike in miles.',['aw_name','aw_location','aw_mac'])
+        self.aw_weeklyrainin = Gauge('aw_weeklyrainin','The weekly amount of rain in inches.',['aw_name','aw_location','aw_mac'])
+        self.aw_dailyrainin = Gauge('aw_dailyrainin','The daily amount of rain in inches.',['aw_name','aw_location','aw_mac'])
+        self.aw_yearlyrainin = Gauge('aw_yearlyrainin','The yearly amount of rain in inches.',['aw_name','aw_location','aw_mac'])
+        self.aw_monthlyrainin = Gauge('aw_monthlyrainin','The monthly amount of rain in inches.',['aw_name','aw_location','aw_mac'])
+        self.aw_windspeedmph = Gauge('aw_windspeedmph','The current windspeed in mph.',['aw_name','aw_location','aw_mac'])
+        self.aw_maxgust = Gauge('aw_maxgust','The maximum daily wind gust speed.',['aw_name','aw_location','aw_mac'])
+        self.aw_solarradiation = Gauge('aw_solarradiation','Solar radiation for the day.',['aw_name','aw_location','aw_mac'])
+        self.aw_barametric = Gauge('aw_barametric','Absolute barametric pressure measured in bars.',['aw_name','aw_location','aw_mac'])
+        self.aw_winddir = Gauge('aw_winddir','Wind direction in degrees.',['aw_name','aw_location','aw_mac'])
 
     def current_readings(self,input_dict):
         """
@@ -126,6 +130,8 @@ class Prometheus():
             self.aw_windspeedmph.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_windspeedmph']) 
             self.aw_maxgust.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_maxgust'])
             self.aw_solarradiation.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_solarradiation'])
+            self.aw_barametric.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_barametric'])
+            self.aw_winddir.labels(input_dict['name'],input_dict['location'],input_dict['mac']).set(input_dict['aw_winddir'])
         except Exception as e:
             logging.error(e)
             logging.error("Could not emit the weather metrics.")
