@@ -71,6 +71,6 @@ scrape_configs:
 
 Use the Grafana dashboard to visualize the collected data.
 
-<img src="./images/example_dash.png">
+<img src="./Images/example_dash.png">
 
-Get the dashboard [here]()
+Get the dashboard [here](https://github.com/JonathanArrance/AWcollector/tree/master/Grafana)
