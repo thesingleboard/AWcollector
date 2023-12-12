@@ -1,11 +1,18 @@
 # AWcollector
 
-A Prometheus collector for the Ambient Weather [API](https://ambientweather.docs.apiary.io/#introduction/authentication).
+A Prometheus exporter for the AmbientWeather weather stations. The exporter will query the [API](https://ambientweather.docs.apiary.io/#introduction/authentication) at a given interval.
 
 ## Pre-reqs
 
 Prometheus
 
+[Install](https://prometheus.io/docs/prometheus/latest/installation/)
+[Configs](https://prometheus.io/docs/prometheus/latest/configuration/configuration/)
+[PromQL](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+
+Grafana
+[Install](https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/)
+[Configs](https://grafana.com/docs/grafana/latest/setup-grafana/configure-docker/)
 
 ## Setup
 
@@ -26,6 +33,7 @@ You will need to set several environment variables in order for the container to
 AMBIENT_ENDPOINT='https://api.ambientweather.net/v1'
 AMBIENT_API_KEY='xxxxxxx'
 AMBIENT_APPLICATION_KEY='xxxxxxx'
+QUERY_INTERVAL='interval in seconds'
 ```
 
 **Run the container**
@@ -61,4 +69,8 @@ scrape_configs:
 
 ## Grafana Dash
 
-Build the dashboards
+Use the Grafana dashboard to visualize the collected data.
+
+<img src="./images/example_dash.png">
+
+Get the dashboard [here]()
